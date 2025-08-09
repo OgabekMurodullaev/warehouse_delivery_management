@@ -21,7 +21,7 @@ class CustomUser(AbstractUser):
     REQUIRED_FIELDS = []
 
     def __str__(self):
-        return self.email or self.phone_number
+        return self.email or self.phone_number or ""
 
 
 class Profile(models.Model):
@@ -35,4 +35,4 @@ class Profile(models.Model):
     objects = models.Manager()
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name}" if self.first_name else str(self.user)
+        return f"{self.first_name} {self.last_name}" if self.first_name else str(self.user) or ""
