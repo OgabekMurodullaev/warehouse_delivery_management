@@ -144,3 +144,20 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.CustomUser'
+
+# Verification settings
+VERIFICATION = {
+    'CODE_LENGTH': 6,
+    'EXPIRATION_MINUTES': 5,
+    'MAX_ATTEMPTS': 5,
+    'RESEND_LIMIT_PER_HOUR': 5
+}
+
+# Email - SMTP settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.example.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'ogabekmurodullayev36@gmail.com'
+EMAIL_HOST_PASSWORD = 'cirlowddxlsoxenn'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'ogabekmurodullayev36@gmail.com'

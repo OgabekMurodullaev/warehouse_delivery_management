@@ -1,6 +1,8 @@
+from collections.abc import set_iterator
+
 from django.contrib.auth import authenticate
 from rest_framework import serializers
-from .models import CustomUser, Profile
+from .models import CustomUser, Profile, VerificationCode
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
@@ -21,6 +23,22 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.set_password(password)
         user.save()
         return user
+
+
+class SendCodeSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=False)
+    phone_number = serializers.CharField(required=False)
+
+    def validate(self, data):
+        if not data.get('email') and not data.get('phone_number'):
+            raise serializers.ValidationError("Email yoki telefon raqam kiritilishi kerak")
+        return data
+
+
+class VerifyCodeSerializer(serializers.Serializer):
+    target = serializers.CharField()
+    method = serializers.ChoiceField(choices=VerificationCode.Methods.choices)
+    code = serializers.CharField(max_length=6)
 
 
 class LoginSerializer(serializers.Serializer):
