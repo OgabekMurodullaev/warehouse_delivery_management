@@ -1,8 +1,7 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
-from unfold.admin import ModelAdmin  # unfold dan foydalanamiz
+from unfold.admin import ModelAdmin
 from django.utils.html import format_html
-from .models import CustomUser, Profile
+from .models import CustomUser, Profile, VerificationCode
 
 
 @admin.register(CustomUser)
@@ -47,3 +46,27 @@ class ProfileAdmin(ModelAdmin):
             'fields': ('address', 'profile_image')
         }),
     )
+
+
+@admin.register(VerificationCode)
+class VerificationCodeAdmin(ModelAdmin):
+    list_display = (
+        'id',
+        'user',
+        'target',
+        'method',
+        'code',
+        'created_at',
+        'expires_at',
+        'attempts',
+        'max_attempts',
+        'is_used',
+    )
+    list_filter = ('method', 'is_used', 'created_at', 'expires_at')
+    search_fields = ('user__email', 'target', 'code')
+    readonly_fields = ('created_at', 'updated_at')
+    ordering = ('-created_at',)
+
+    def get_user_email(self, obj):
+        return obj.user.email if obj.user else "-"
+    get_user_email.short_description = "User Email"
