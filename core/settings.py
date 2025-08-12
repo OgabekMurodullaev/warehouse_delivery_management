@@ -145,12 +145,25 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
 # Verification settings
 VERIFICATION = {
     'CODE_LENGTH': 6,
     'EXPIRATION_MINUTES': 5,
     'MAX_ATTEMPTS': 5,
-    'RESEND_LIMIT_PER_HOUR': 5
+    'RESEND_LIMIT_PER_HOUR': 5,
+    'RESEND_COOLDOWN_SECONDS': 60,
+    'IP_RESEND_LIMIT_PER_HOUR': 30,
+    'GLOBAL_DAILY_LIMIT': 500
 }
 
 # Email - SMTP settings
