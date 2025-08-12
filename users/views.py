@@ -73,17 +73,17 @@ class SendVerificationCodeView(APIView):
                 return Response({"detail": f"Failed to send email: {e}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             return Response({"detail": "Verification code sent to email"}, status=status.HTTP_200_OK)
 
-        if phone:
-            user = None
-            try:
-                user = CustomUser.objects.get(phone_number=phone)
-            except user.DoesNotExist:
-                user = None
-
-            vc = create_verification_code(target=phone, method=VerificationCode.Methods.PHONE, user=user)
-            send_verification_email(user.email, vc.code)
-            return Response({"detail": "Tasdiqlash kodi emailingizga yuborildi"}, status=status.HTTP_200_OK)
-        return Response({"detail": "Invalid request"}, status=status.HTTP_400_BAD_REQUEST)
+        # if phone:
+        #     user = None
+        #     try:
+        #         user = CustomUser.objects.get(phone_number=phone)
+        #     except user.DoesNotExist:
+        #         user = None
+        #
+        #     vc = create_verification_code(target=phone, method=VerificationCode.Methods.PHONE, user=user)
+        #     send_verification_email(user.email, vc.code)
+        #     return Response({"detail": "Tasdiqlash kodi emailingizga yuborildi"}, status=status.HTTP_200_OK)
+        # return Response({"detail": "Invalid request"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class VerifyCodeView(APIView):

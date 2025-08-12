@@ -5,6 +5,8 @@ from django.db import models
 from django.utils import timezone
 from datetime import timedelta
 
+from users.managers import CustomUserManager
+
 
 class CustomUser(AbstractUser):
     class Roles(models.TextChoices):
@@ -20,6 +22,8 @@ class CustomUser(AbstractUser):
 
     role = models.CharField(max_length=20, choices=Roles.choices, default=Roles.CLIENT)
     is_verified = models.BooleanField(default=False)
+
+    objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
