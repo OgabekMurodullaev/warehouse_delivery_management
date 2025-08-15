@@ -24,8 +24,9 @@ def create_user(db):
 
 @pytest.fixture()
 def create_otp(db):
-    def make_otp(target, code="123456", **kwargs):
+    def make_otp(user, target, code="123456", **kwargs):
         defaults = {
+            "user": user,
             "target": target,
             "code": code,
             "is_used": False

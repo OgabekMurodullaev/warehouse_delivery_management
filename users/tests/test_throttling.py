@@ -9,7 +9,7 @@ class TestVerifyOTP:
         user = create_user()
         url = reverse('users:verify_code')
         otp_code = "123456"
-        create_otp(user.email, otp_code, method="email")
+        create_otp(user=user, target=user.email, code=otp_code, method="email")
 
         data = {
             "target": user.email,
@@ -21,5 +21,3 @@ class TestVerifyOTP:
         user.refresh_from_db()
         assert response.status_code == 200
         assert user.is_verified is True
-
-
