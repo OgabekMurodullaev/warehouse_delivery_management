@@ -1,6 +1,6 @@
 from django.contrib import admin
 from unfold.admin import ModelAdmin
-from .models import Warehouse, Stock
+from .models import Warehouse, Stock, StockHistory
 
 
 @admin.register(Warehouse)
@@ -40,3 +40,10 @@ class StockAdmin(ModelAdmin):
     )
 
     readonly_fields = ("last_updated",)
+
+
+@admin.register(StockHistory)
+class StockHistoryAdmin(ModelAdmin):
+    list_display = ("stock", "change_amount", "changed_by", "change_type", "timestamp")
+    list_filter = ("changed_by", "change_type")
+    readonly_fields = ("timestamp", )
